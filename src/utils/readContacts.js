@@ -1,13 +1,14 @@
-// import { error } from 'node:console';
-import { PATH_DB } from '../constants/contacts.js';
+import fs from 'fs/promises';
+import { PATH_DB } from '../constants/contacts.js'; 
+export const readContacts = async () => {
+  try {
+    const data = await fs.readFile(PATH_DB, 'utf-8');
+    return JSON.parse(data);  
+  } catch (error) {
+    console.error('Помилка зчитування файлу:', error);
+    return [];  
+  }
+};
 
-const fs = require('node:fs/promises');
-fs.readFile("db.json", {encoding: "utf-8"})
-.then(data => {
-    console.log(data);
-})
-.catch(error=>{
-    console.error(error);
-})
 
-export const readContacts = async () => {};
+export default readContacts;

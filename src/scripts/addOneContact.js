@@ -1,13 +1,27 @@
-export const addOneContact = async () => {};
+import { readContacts } from '../utils/readContacts.js';
+import { writeContacts } from '../utils/writeContacts.js';
+import { createFakeContact } from '../utils/createFakeContact.js';  // функція для генерації випадкового контакту
 
-const fs = require('node:fs/promises');
+const addOneContact = async () => {
+  try {
+  
+    const contacts = await readContacts();
 
-fs.appendFile("db.json", [])
-.then(() => {
-    console.log("ok");
-})
-.catch(error=>{
-    console.error(error);
-})
 
-addOneContact();
+    const newContact = createFakeContact();
+
+ 
+    contacts.push(newContact);
+
+
+    await writeContacts(contacts);
+
+    console.log('Контакт успішно додано:', newContact);
+  } catch (error) {
+    console.error('Помилка додавання контакту:', error);
+  }
+};
+
+addOneContact();  
+
+export default addOneContact;
